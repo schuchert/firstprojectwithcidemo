@@ -1,38 +1,36 @@
 package shoe.example.firstproject;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class AppTest {
+
+    private ByteArrayOutputStream byteArrayOutputStream;
+    private PrintStream originalSystemOut;
+
+    @Before
+    public void redirectOutput() {
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(byteArrayOutputStream);
+        originalSystemOut = System.out;
+        System.setOut(printStream);
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    @After
+    public void restoreOutput() {
+        System.setOut(originalSystemOut);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    public void testApp() {
+        App.main(null);
+        assertThat(byteArrayOutputStream.toString(), is("Hello World!\n"));
     }
 }
