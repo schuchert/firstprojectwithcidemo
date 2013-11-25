@@ -11,7 +11,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class AppTest {
-
     private ByteArrayOutputStream byteArrayOutputStream;
     private PrintStream originalSystemOut;
 
