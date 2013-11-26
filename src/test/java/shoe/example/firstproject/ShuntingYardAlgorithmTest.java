@@ -31,4 +31,9 @@ public class ShuntingYardAlgorithmTest {
         String result = shuntingYardAlgorithm.translate("45");
         assertThat(result, is("45"));
     }
+
+    @Test(expected=RuntimeException.class)
+    public void shouldRejectOperatorOnly() {
+        shuntingYardAlgorithm.translate("+");
+    }
 }
